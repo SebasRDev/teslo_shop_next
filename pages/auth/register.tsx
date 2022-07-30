@@ -29,7 +29,7 @@ const RegisterPage = () => {
 
           <Grid item xs={12} display="flex" justifyContent="center">
             <NextLink  href='/auth/login' passHref>
-              <Link underline='always'>ya tienes cuenta? Ingresa</Link>
+              <Link underline='always'>ya tienes cuenta? Ingresa aquí</Link>
             </NextLink>
           </Grid>
         </Grid>
