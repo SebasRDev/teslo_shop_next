@@ -2,10 +2,19 @@ import type { NextPage } from "next";
 import { Typography } from "@mui/material";
 
 import { ShopLayout } from "../components/layouts";
-import { initialData } from "../database/products";
+// import { initialData } from "../database/products";
 import { ProductList } from "../components/products/ProductList";
 
-const Home: NextPage = () => {
+import useSWR from 'swr'
+const fetcher = (...args:[key:string]) => fetch(...args).then((res) => res.json())
+
+const HomePage: NextPage = () => {
+
+  const { data, error } = useSWR('/api/products', fetcher)
+
+  if (error) return <div>Failed to load</div>
+  if (!data) return <div>Loading...</div>
+
   return (
     <ShopLayout
       title={"teslo-shop - Home"}
@@ -18,9 +27,9 @@ const Home: NextPage = () => {
         Todos los productos
       </Typography>
 
-      <ProductList products={initialData.products as any} />
+      <ProductList products={data as any} />
     </ShopLayout>
   );
 };
 
-export default Home;
+export default HomePage;
