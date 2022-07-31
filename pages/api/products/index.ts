@@ -18,7 +18,6 @@ export default function handler(
         message: "Bad Request",
       });
   }
-  res.status(200).json({ message: "Example" });
 }
 const getProduct = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { gender = "all" } = req.query;
