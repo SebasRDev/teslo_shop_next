@@ -20,6 +20,7 @@ interface adminMenuItem {
 interface clientMenuItem {
   label: string;
   icon: keyof typeof icons;
+  link?:string; 
   properties?: Object;
 }
 
@@ -63,6 +64,7 @@ export const clientMenu: clientMenuItem[] = [
   {
     label: "Hombres",
     icon: "MaleOutlined",
+    link: "/category/men",
     properties: {
       sx: { display: { xs: "", sm: "none" } },
     },
@@ -70,6 +72,7 @@ export const clientMenu: clientMenuItem[] = [
   {
     label: "Mujeres",
     icon: "FemaleOutlined",
+    link: "/category/women",
     properties: {
       sx: { display: { xs: "", sm: "none" } },
     },
@@ -77,6 +80,7 @@ export const clientMenu: clientMenuItem[] = [
   {
     label: "Niños",
     icon: "EscalatorWarningOutlined",
+    link: "/category/kid",
     properties: {
       sx: { display: { xs: "", sm: "none" } },
     },

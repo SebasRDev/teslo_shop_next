@@ -13,13 +13,25 @@ import {
 } from "@mui/material";
 import { SearchOutlined } from "@mui/icons-material";
 import { adminMenu, icons, clientMenu } from "./constants";
+import { useContext } from "react";
+import { UiContext } from "../../../context";
+import { useRouter } from 'next/router';
 
 export const SideMenu = () => {
+  const router = useRouter();
+  const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+
+  const navigateTo = (url: string = "") => {
+    toggleSideMenu();
+    router.push(url);
+  };
+
   return (
     <Drawer
-      open={false}
+      open={isMenuOpen}
       anchor="right"
       sx={{ backdropFilter: "blur(4px)", transition: "all 0.5s ease-out" }}
+      onClose={toggleSideMenu}
     >
       <Box sx={{ width: 250, paddingTop: 5 }}>
         <List>
@@ -37,10 +49,15 @@ export const SideMenu = () => {
             />
           </ListItem>
 
-          {clientMenu.map(({ label, icon, properties }) => {
+          {clientMenu.map(({ label, icon, link, properties }) => {
             const Icon = icons[icon];
             return (
-              <ListItem button key={label} {...properties}>
+              <ListItem
+                onClick={() => navigateTo(link)}
+                button
+                key={label}
+                {...properties}
+              >
                 <ListItemIcon>
                   <Icon />
                 </ListItemIcon>
