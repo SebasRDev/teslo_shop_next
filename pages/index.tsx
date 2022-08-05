@@ -2,18 +2,12 @@ import type { NextPage } from "next";
 import { Typography } from "@mui/material";
 
 import { ShopLayout } from "../components/layouts";
-// import { initialData } from "../database/products";
 import { ProductList } from "../components/products/ProductList";
-
-import useSWR from 'swr'
-const fetcher = (...args:[key:string]) => fetch(...args).then((res) => res.json())
+import { useProducts } from "../hooks";
 
 const HomePage: NextPage = () => {
 
-  const { data, error } = useSWR('/api/products', fetcher)
-
-  if (error) return <div>Failed to load</div>
-  if (!data) return <div>Loading...</div>
+  const {products, isLoading} = useProducts('/products');
 
   return (
     <ShopLayout
@@ -27,7 +21,12 @@ const HomePage: NextPage = () => {
         Todos los productos
       </Typography>
 
-      <ProductList products={data as any} />
+      {
+        isLoading
+          ? <h1>Cargando</h1>
+          : <ProductList products={products} />
+      }
+
     </ShopLayout>
   );
 };
