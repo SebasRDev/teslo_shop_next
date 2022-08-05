@@ -4,11 +4,10 @@ import { Typography } from "@mui/material";
 import { ShopLayout } from "../components/layouts";
 import { ProductList } from "../components/products/ProductList";
 import { useProducts } from "../hooks";
-import { FullScreenLoader } from '../components/ui';
+import { FullScreenLoader } from "../components/ui";
 
 const HomePage: NextPage = () => {
-
-  const {products, isLoading} = useProducts('/products');
+  const { products, isLoading } = useProducts("/products");
 
   return (
     <ShopLayout
@@ -22,12 +21,7 @@ const HomePage: NextPage = () => {
         Todos los productos
       </Typography>
 
-      {
-        isLoading
-          ? <FullScreenLoader/>
-          : <ProductList products={products} />
-      }
-
+      {isLoading ? <FullScreenLoader /> : <ProductList products={products} />}
     </ShopLayout>
   );
 };
