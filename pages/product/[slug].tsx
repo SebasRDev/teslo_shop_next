@@ -1,11 +1,24 @@
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
+import { NextPage, GetServerSideProps } from "next";
+
 import { ShopLayout } from "../../components/layouts";
-import { ItemCounter, ProductSlideshow, SizesSelector } from "../../components/ui";
-import { initialData } from "../../database/products";
+import {
+  ItemCounter,
+  ProductSlideshow,
+  SizesSelector,
+} from "../../components/ui";
 
-const product = initialData.products[0];
+import { dbProducts } from "../../database";
+import { IProduct } from "../../interfaces";
 
-const ProductPage = () => {
+interface Props {
+  product: IProduct;
+}
+
+const ProductPage: NextPage<Props> = ({ product }) => {
+  // const {query} = useRouter();
+  // const { products:product, isLoading } = useProducts(`/products/${query.slug}`);
+
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
       <Grid container spacing={3}>
@@ -27,7 +40,10 @@ const ProductPage = () => {
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Cantidad</Typography>
               <ItemCounter />
-              <SizesSelector selectedSize={product.sizes[0]} sizes={product.sizes} />
+              <SizesSelector
+                selectedSize={product.sizes[0]}
+                sizes={product.sizes}
+              />
             </Box>
 
             {/**Agregar al carrito */}
@@ -47,6 +63,29 @@ const ProductPage = () => {
       </Grid>
     </ShopLayout>
   );
+};
+
+// getServerSideProps
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { slug } = params as { slug: string };
+  const product = await dbProducts.getProductBySlug(slug);
+
+  if(!product){
+    return {
+      redirect:{
+        destination: '/',
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {
+      product
+    },
+  };
 };
 
 export default ProductPage;
