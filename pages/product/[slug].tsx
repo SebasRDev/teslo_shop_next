@@ -68,7 +68,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
 // getServerSideProps
 // You should use getServerSideProps when:
 // - Only if you need to pre-render a page whose data must be fetched at request time
-// * No se usa porque quema mucho el server al generar siempre las paginas por servidor
+// * No se usa en este caso porque quema mucho el server al generar siempre las paginas por servidor y los productos no cambian constantemente
 // export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 //   const { slug } = params as { slug: string };
 //   const product = await dbProducts.getProductBySlug(slug);
