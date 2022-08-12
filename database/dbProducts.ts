@@ -27,7 +27,7 @@ export const getAllProductSlugs = async (): Promise<ProductSlugs[]> => {
   return slugs;
 };
 
-export const getProductsByTerm = async (term: string):Promise<IProduct[]> => {
+export const getProductsByTerm = async (term: string): Promise<IProduct[]> => {
   term = term.toString().toLowerCase();
   await db.connect();
   const products = await Product.find({
@@ -38,4 +38,12 @@ export const getProductsByTerm = async (term: string):Promise<IProduct[]> => {
   await db.disconnect();
 
   return products;
+};
+
+export const getAllProducts = async (): Promise<IProduct[]> => {
+  await db.connect();
+  const allProducts = await Product.find().lean();
+  await db.disconnect();
+
+  return JSON.parse(JSON.stringify(allProducts));
 };
